@@ -35,8 +35,8 @@ jobs:
 
 
     - name : install chome
-      uses: browser-actions/setup-chrome@latest
-      run: chrome --version      
+      uses: browser-actions/setup-chrome@v0.0.0
+
     
     - name : run_hy_speedtest-go
       run: ./run_hy_speedtest.sh
