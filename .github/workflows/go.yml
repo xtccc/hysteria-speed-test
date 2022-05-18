@@ -8,10 +8,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    steps:
-    #使用公共的服务器checkoout
-    - uses: actions/checkout@v3
-    
+    steps:    
     #安装go 
     - name: Set up Go
       uses: actions/setup-go@v3
@@ -44,5 +41,10 @@ jobs:
     - name: run_go_click test speed
       run: ./go_click
 
+    - name: cat server log
+      run: cat ./server.log
+
+    - name: cat client log
+      run: cat ./client.log
 
     
