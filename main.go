@@ -40,7 +40,7 @@ func main() {
 	defer cancel()
 
 	var outerBefore, outerAfter, down_speed, up_speed, ping, jit string
-	URL := "http://192.168.56.3:8989/"
+	URL := "http://127.0.0.1:8989/"
 	if err := chromedp.Run(ctx,
 		chromedp.Navigate(URL),
 		// div 中 #后接 id 值，.后接 class 值
