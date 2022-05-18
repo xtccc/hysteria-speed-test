@@ -29,6 +29,8 @@ func main() {
 
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.DisableGPU,
+                chromedp.ProxyServer("socks5://127.0.0.1:1080"),
+  
 		//chromedp.Flag("headless", false),
 		chromedp.UserDataDir(dir),
 	)
