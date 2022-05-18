@@ -1,0 +1,13 @@
+{
+    "listen": ":36666",
+    "cert": "/root/server.crt",
+    "key": "/root/server.key",
+    "auth": {
+      "mode": "passwords",
+      "config": [
+        "e205573054ee18cb78d341fb1e3ed8b9"
+      ]
+    },
+    "protocol": "wechat-video"
+  }
+  

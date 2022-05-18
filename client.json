@@ -1,0 +1,25 @@
+{
+    "server": "192.168.56.3:36666",
+    "protocol": "wechat-video",
+    "auth_str": "e205573054ee18cb78d341fb1e3ed8b9",
+    //"down_mbps": 6556,
+    "down_mbps": 500,
+    //"up_mbps": 2736,
+    "up_mbps": 500,
+    "retry": 100,
+    "insecure": true,
+    "tproxy_tcp": {
+    "listen": "0.0.0.0:60080", 
+    "timeout": 300 
+    },
+    "tproxy_udp": {
+    "listen": "0.0.0.0:60080", 
+    "timeout": 300 
+    }, 
+    "socks5": {
+    "listen": "0.0.0.0:1080"
+  },
+  "http": {
+    "listen": "0.0.0.0:8080"
+  }
+}
