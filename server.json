@@ -1,7 +1,7 @@
 {
     "listen": ":36666",
-    "cert": "/root/server.crt",
-    "key": "/root/server.key",
+    "cert": "./server.crt",
+    "key": "./server.key",
     "auth": {
       "mode": "passwords",
       "config": [
