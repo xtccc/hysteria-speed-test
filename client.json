@@ -8,14 +8,6 @@
     "up_mbps": 500,
     "retry": 100,
     "insecure": true,
-    "tproxy_tcp": {
-    "listen": "0.0.0.0:60080", 
-    "timeout": 300 
-    },
-    "tproxy_udp": {
-    "listen": "0.0.0.0:60080", 
-    "timeout": 300 
-    }, 
     "socks5": {
     "listen": "0.0.0.0:1080"
   },
