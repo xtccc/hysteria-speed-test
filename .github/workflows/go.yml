@@ -50,4 +50,7 @@ jobs:
     - name: cat client log
       run: cat ./client.log
 
+    - name: cat top log
+      run: cat ./top.log
+
     
