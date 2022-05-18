@@ -24,15 +24,15 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-    - name: download hysteria
+    #- name: download hysteria
     - name: Download workflow artifact
       uses: dawidd6/action-download-artifact@v2.19.0
       with:
         workflow: Build and release
         commit: ecf6b8b7063e4bf36d85e9a25fa5d9c97c3a6d5f
 
-    - name: download speedtest-go
-    - name: run_go_click test speed
+    #- name: download speedtest-go
+    #- name: run_go_click test speed
 
 
     
