@@ -41,7 +41,7 @@ case_hy_protocol $protocol
 echo "after"
 cat -n  main.go |grep -E "22|35"
 #./sed_the_ip.sh end
-go build -v ./...
+go build -v ./... &> build.log 
 wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 -o down_hy.log && chmod +x hysteria-linux-amd64
 
 #./gen_key.sh
