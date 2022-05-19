@@ -50,9 +50,10 @@ home_dir=$(pwd)
 cd $dir/cmd
 echo $(pwd)
 go build -o hysteria-linux-amd64 &> ${home_dir}/build_hu.log && chmod +x hysteria-linux-amd64
-./hysteria-linux-amd64 --version
+mv ./hysteria-linux-amd64 $home_dir
 
 cd $home_dir
+./hysteria-linux-amd64 --version
 
 
 
