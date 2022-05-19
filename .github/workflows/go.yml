@@ -28,12 +28,6 @@ jobs:
           protocol: n
         run: ./run_speedtest.sh
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.0.0
-        with:
-          name: log
-          path: ./*log
-
 
       - name: run speedtest env
         env: 
@@ -42,13 +36,6 @@ jobs:
 
       - name: run speedtest in wechat-video
         run: ./run_speedtest.sh
-
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.0.0
-        with:
-          name: log
-          path: ./*log
-
 
 
       - name: run speedtest env
@@ -72,14 +59,7 @@ jobs:
         run: ./run_speedtest_env.sh
 
       - name: run speedtest in udp
-        run: ./run_speedtest.sh
-
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.0.0
-        with:
-          name: log
-          path: ./*log
-
+        run: ./run_speedtest.sh    
 
       - name: run speedtest env
         run: ./run_speedtest_env.sh

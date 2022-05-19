@@ -40,10 +40,10 @@ sed -i "s/ip/$ip/" main.go
 echo "after"
 cat -n main.go | grep -E "22|35"
 #./sed_the_ip.sh end
-go build -v ./... &>build.log
+go build -v ./... &>${protocol}_build.log
 
 #wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 -o down_hy.log && chmod +x hysteria-linux-amd64
-curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o down_hy_source.log -O - | tar -xz
+curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o ${protocol}_down_hy_source.log -O - | tar -xz
 dir=$(ls |grep HyNetwork-hysteria )
 echo $dir
 home_dir=$(pwd)
@@ -68,11 +68,11 @@ openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out serv
 wget https://github.com/librespeed/speedtest-go/releases/download/v1.1.4/speedtest-go_1.1.4_linux_amd64.tar.gz -o down_speedtest_go.log && tar xf speedtest-go_1.1.4_linux_amd64.tar.gz && rm speedtest-go_1.1.4_linux_amd64.tar.gz
 #./run_hy_speedtest.sh
 
-top -c -b &>top.log &
+top -c -b &> ${protocol}_top.log &
 
 case_hy_protocol $protocol
-./hysteria-linux-amd64 server -c ./server.json &>server.log &
-./hysteria-linux-amd64 client -c ./client.json &>client.log &
+./hysteria-linux-amd64 server -c ./server.json &> ${protocol}_server.log &
+./hysteria-linux-amd64 client -c ./client.json &> ${protocol}_client.log &
 ./speedtest-backend &
 #./run_hy_speedtest.sh end
 #cat ./server.log || echo "not server.log"
