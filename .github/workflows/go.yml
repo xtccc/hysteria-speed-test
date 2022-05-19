@@ -5,54 +5,20 @@ on:
   pull_request:
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
-    steps:    
-    #使用公共的服务器checkoout
-    - uses: actions/checkout@v3
+    steps:
+      #使用公共的服务器checkoout
+      - uses: actions/checkout@v3
 
-    - name: set the ip 
-      run: ./sed_the_ip.sh
-    #安装go
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.18
+      #安装go
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
 
-    - name: Build
-      run: go build -v ./...
+      - name: install chome
+        uses: browser-actions/setup-chrome@v0.0.0
 
-    - name: Test
-      run: go test -v ./...
-
-    - name: download hysteria
-      run: wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 && chmod +x hysteria-linux-amd64
-    
-    - name: gen openssh key
-      run: ./gen_key.sh 
-
-    - name: download speedtest-go
-      run: wget https://github.com/librespeed/speedtest-go/releases/download/v1.1.4/speedtest-go_1.1.4_linux_amd64.tar.gz && tar xf speedtest-go_1.1.4_linux_amd64.tar.gz && rm speedtest-go_1.1.4_linux_amd64.tar.gz
-
-
-    - name : install chome
-      uses: browser-actions/setup-chrome@v0.0.0
-
-    
-    - name : run_hy_speedtest-go
-      run: ./run_hy_speedtest.sh
-
-    - name: run_go_click test speed
-      run: ./go_click
-
-    - name: cat server log
-      run: cat ./server.log
-
-    - name: cat client log
-      run: cat ./client.log
-
-    - name: cat top log
-      run: cat ./top.log
-
-    
+      - name: run speedtest
+        run: ./run_speedtest.sh
