@@ -23,10 +23,10 @@ jobs:
       - name: run speedtest env
         env: 
           protocol: n
-        run: ./run_speedtest.sh
+        run: ./run_speedtest_env.sh
 
       - name: run speedtest
-        run: ./go_click |tee  go_click.log 
+        run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0
@@ -38,10 +38,10 @@ jobs:
       - name: run speedtest env
         env: 
           protocol: w
-        run: ./run_speedtest.sh
+        run: ./run_speedtest_env.sh
 
       - name: run speedtest
-        run: ./go_click |tee  go_click.log 
+        run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0
@@ -54,10 +54,10 @@ jobs:
       - name: run speedtest env
         env: 
           protocol: f
-        run: ./run_speedtest.sh
+        run: ./run_speedtest_env.sh
 
       - name: run speedtest
-        run: ./go_click |tee  go_click.log 
+        run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0
@@ -69,10 +69,10 @@ jobs:
       - name: run speedtest env
         env: 
           protocol: u
-        run: ./run_speedtest.sh
+        run: ./run_speedtest_env.sh
 
       - name: run speedtest
-        run: ./go_click |tee  go_click.log 
+        run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0
@@ -84,10 +84,10 @@ jobs:
       - name: run speedtest env
         env: 
           protocol: n
-        run: ./run_speedtest.sh
+        run: ./run_speedtest_env.sh
 
       - name: run speedtest
-        run: ./go_click |tee  go_click.log 
+        run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0

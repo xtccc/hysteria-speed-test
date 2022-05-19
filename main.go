@@ -17,13 +17,26 @@ func main() {
 	}
 	defer os.RemoveAll(dir)
 
-	opts := append(chromedp.DefaultExecAllocatorOptions[:],
-		chromedp.DisableGPU,
-		chromedp.ProxyServer("socks5://ip:1080"),
+	// args 1 to diff the proxy or noproxy in chromedp.ProxySeverity
+	arg1 := os.Args[1]
+	var opts []func(*chromedp.ExecAllocator)
 
-		//chromedp.Flag("headless", false),
-		chromedp.UserDataDir(dir),
-	)
+	if arg1 == "noproxy" {
+
+		opts = append(chromedp.DefaultExecAllocatorOptions[:],
+			chromedp.DisableGPU,
+			//chromedp.Flag("headless", false),
+			chromedp.UserDataDir(dir),
+		)
+	} else if arg1 == "proxy" {
+
+		opts = append(chromedp.DefaultExecAllocatorOptions[:],
+			chromedp.DisableGPU,
+			chromedp.ProxyServer("socks5://ip:1080"),
+			//chromedp.Flag("headless", false),
+			chromedp.UserDataDir(dir),
+		)
+	}
 
 	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
 	defer cancel()
