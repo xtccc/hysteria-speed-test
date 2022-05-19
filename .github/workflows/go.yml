@@ -20,8 +20,11 @@ jobs:
       - name: install chome
         uses: browser-actions/setup-chrome@v0.0.0
 
-      - name: run speedtest
+      - name: run speedtest env
         run: bash -x ./run_speedtest.sh
+
+      - name: run speedtest
+        run: ./go_click |tee  go_click.log 
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0
