@@ -5,20 +5,39 @@ function case_hy_protocol() {
     w)
         echo "\$1 is $1, use wechat-video"
         sed -i 's/protocol": ".*/protocol": "wechat-video"/' server.json
-
+        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
+        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
         ;;
 
-    f)
-        echo "\$1 is $1, use faketcp"
-        sed -i 's/protocol": ".*/protocol": "faketcp"/' server.json
-        sed -i  "s#\"listen\":.*#\"listen\": \"$ip:36666\",#" server.json
+    w-o)
+        echo "\$1 is $1, use wechat-video with obfs"
+        sed -i 's/protocol": ".*/protocol": "wechat-video"/' server.json
 
+        cat server.json client.json
+        # add obfs
+        sed -i '2 a\"obfs":"7ba34ae04b27677419db1ac547f01ab1",' server.json
+        sed -i '2 a\"obfs":"7ba34ae04b27677419db1ac547f01ab1",' client.json
+        cat server.json client.json
+        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
+        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
+
+        # rm obfs
+        sed -i '/obfs/ d' server.json
+        sed -i '/obfs/ d' client.json
+        cat server.json client.json
         ;;
     u)
 
         echo "\$1 is $1, use udp"
         sed -i 's/protocol": ".*/protocol": "udp"/' server.json
+        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
+        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
+        ;;
+    n)
 
+        echo "\$1 is $1, use no proxy "
+        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
+        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
         ;;
     esac
     sed -n '/protocol": ".*/p' server.json
@@ -45,18 +64,16 @@ go build -v ./... &>${protocol}_build.log
 
 #wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 -o down_hy.log && chmod +x hysteria-linux-amd64
 curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o ${protocol}_down_hy_source.log -O - | tar -xz
-dir=$(ls |grep HyNetwork-hysteria )
+dir=$(ls | grep HyNetwork-hysteria)
 echo $dir
 home_dir=$(pwd)
 cd $dir/cmd
 echo $(pwd)
-go build -o hysteria-linux-amd64 &> ${home_dir}/build_hu.log && chmod +x hysteria-linux-amd64
+go build -o hysteria-linux-amd64 &>${home_dir}/build_hu.log && chmod +x hysteria-linux-amd64
 mv ./hysteria-linux-amd64 $home_dir
 
 cd $home_dir
 ./hysteria-linux-amd64 --version
-
-
 
 #./gen_key.sh
 openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
@@ -69,11 +86,9 @@ openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out serv
 wget https://github.com/librespeed/speedtest-go/releases/download/v1.1.4/speedtest-go_1.1.4_linux_amd64.tar.gz -o down_speedtest_go.log && tar xf speedtest-go_1.1.4_linux_amd64.tar.gz && rm speedtest-go_1.1.4_linux_amd64.tar.gz
 #./run_hy_speedtest.sh
 
-top -c -b &> ${protocol}_top.log &
+top -c -b &>${protocol}_top.log &
 
 case_hy_protocol $protocol
-./hysteria-linux-amd64 server -c ./server.json &> ${protocol}_server.log &
-./hysteria-linux-amd64 client -c ./client.json &> ${protocol}_client.log &
 ./speedtest-backend &
 #./run_hy_speedtest.sh end
 #cat ./server.log || echo "not server.log"
