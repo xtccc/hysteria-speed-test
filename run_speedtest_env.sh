@@ -46,11 +46,13 @@ go build -v ./... &>build.log
 curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o down_hy_source.log -O - | tar -xz
 dir=$(ls |grep HyNetwork-hysteria )
 echo $dir
+home_dir=$(pwd)
 cd $dir/cmd
-go build -o hysteria-linux-amd64 &> build_hu.log && chmod +x hysteria-linux-amd64
+echo $(pwd)
+go build -o hysteria-linux-amd64 &> ${home_dir}/build_hu.log && chmod +x hysteria-linux-amd64
 ./hysteria-linux-amd64 --version
 
-cd ../../
+cd $home_dir
 
 
 
@@ -81,3 +83,4 @@ function clean_env() {
     killall -9 hysteria-linux-amd64
     killall -9 speedtest-backend
 }
+clean_env
