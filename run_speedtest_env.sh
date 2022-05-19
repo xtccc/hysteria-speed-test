@@ -70,6 +70,7 @@ mv hysteria hysteria_source
 dir=hysteria_source
 cd $dir/cmd
 echo $(pwd)
+git branch -vv | tee
 go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
 mv ./hysteria $home_dir
 

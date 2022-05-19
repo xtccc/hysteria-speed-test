@@ -9,7 +9,7 @@ fi
 
 function clean_env() {
     killall -9 top
-    killall -9 hysteria-linux-amd64
+    killall -9 hysteria
     killall -9 speedtest-backend
     sleep 2s
 }
