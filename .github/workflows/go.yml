@@ -33,3 +33,64 @@ jobs:
         with:
           name: log
           path: ./*log
+
+
+      - name: run speedtest env
+        env: 
+          protocol: w
+        run: ./run_speedtest.sh
+
+      - name: run speedtest
+        run: ./go_click |tee  go_click.log 
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: log
+          path: ./*log
+
+
+
+      - name: run speedtest env
+        env: 
+          protocol: f
+        run: ./run_speedtest.sh
+
+      - name: run speedtest
+        run: ./go_click |tee  go_click.log 
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: log
+          path: ./*log
+
+
+      - name: run speedtest env
+        env: 
+          protocol: u
+        run: ./run_speedtest.sh
+
+      - name: run speedtest
+        run: ./go_click |tee  go_click.log 
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: log
+          path: ./*log
+
+
+      - name: run speedtest env
+        env: 
+          protocol: n
+        run: ./run_speedtest.sh
+
+      - name: run speedtest
+        run: ./go_click |tee  go_click.log 
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: log
+          path: ./*log
