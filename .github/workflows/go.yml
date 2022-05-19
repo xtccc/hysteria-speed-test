@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  hysteria_speed_test:
     runs-on: ubuntu-latest
     steps:
       #使用公共的服务器checkoout
@@ -21,11 +21,11 @@ jobs:
         uses: browser-actions/setup-chrome@v0.0.0
 
       - name: run speedtest env
-        env: 
-          protocol: n
         run: ./run_speedtest_env.sh
 
-      - name: run speedtest
+      - name: run speedtest in no proxy
+        env: 
+          protocol: n
         run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
@@ -40,7 +40,7 @@ jobs:
           protocol: w
         run: ./run_speedtest_env.sh
 
-      - name: run speedtest
+      - name: run speedtest in wechat-video
         run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
@@ -56,7 +56,7 @@ jobs:
           protocol: f
         run: ./run_speedtest_env.sh
 
-      - name: run speedtest
+      - name: run speedtest in faketcp
         run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
@@ -71,7 +71,7 @@ jobs:
           protocol: u
         run: ./run_speedtest_env.sh
 
-      - name: run speedtest
+      - name: run speedtest in udp
         run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact
@@ -82,11 +82,11 @@ jobs:
 
 
       - name: run speedtest env
-        env: 
-          protocol: n
         run: ./run_speedtest_env.sh
 
-      - name: run speedtest
+      - name: run speedtest in no proxy
+        env: 
+          protocol: n      
         run: ./run_speedtest.sh
 
       - name: Upload a Build Artifact

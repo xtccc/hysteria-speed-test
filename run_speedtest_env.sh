@@ -4,20 +4,22 @@ function case_hy_protocol() {
     w)
         echo "\$1 is $1, use wechat-video"
         sed -i 's/protocol": ".*/protocol": "wechat-video"/' server.json
-        
+
         ;;
+
     f)
         echo "\$1 is $1, use faketcp"
         sed -i 's/protocol": ".*/protocol": "faketcp"/' server.json
-        
+
         ;;
     u)
 
         echo "\$1 is $1, use udp"
         sed -i 's/protocol": ".*/protocol": "faketcp"/' server.json
-        
+
         ;;
     esac
+    sed -n '/protocol": ".*/p' server.json
 
 }
 
@@ -38,7 +40,6 @@ echo "after"
 cat -n main.go | grep -E "22|35"
 #./sed_the_ip.sh end
 go build -v ./... &>build.log
-
 
 wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 -o down_hy.log && chmod +x hysteria-linux-amd64
 
@@ -64,8 +65,7 @@ case_hy_protocol $protocol
 #cat ./client.log || echo "not client.log"
 #cat ./top.log || echo "not top.log"
 
-
-function clean_env(){
+function clean_env() {
     killall -9 top
     killall -9 hysteria-linux-amd64
     killall -9 speedtest-backend
