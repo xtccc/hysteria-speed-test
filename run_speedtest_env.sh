@@ -1,4 +1,4 @@
-set -xe
+set -e
 function case_hy_protocol() {
     # w , f ,u to set the protocol: "" in server.json
     case "${1}" in
@@ -11,6 +11,7 @@ function case_hy_protocol() {
     f)
         echo "\$1 is $1, use faketcp"
         sed -i 's/protocol": ".*/protocol": "faketcp"/' server.json
+        sed -i  "s#\"listen\":.*#\"listen\": \"$ip:36666\",#" server.json
 
         ;;
     u)

@@ -1,4 +1,4 @@
-set -xe
+set -e
 if [ x$protocol = xn ]; then
     echo "use no proxy"
     ./go_click noproxy | tee ${protocol}_go_click.log
