@@ -24,6 +24,8 @@ openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out serv
 
 wget https://github.com/librespeed/speedtest-go/releases/download/v1.1.4/speedtest-go_1.1.4_linux_amd64.tar.gz && tar xf speedtest-go_1.1.4_linux_amd64.tar.gz && rm speedtest-go_1.1.4_linux_amd64.tar.gz
 #./run_hy_speedtest.sh
+lscpu 
+nmon -f -s 1 -c 3600 -m ./nmon.log
 top -c  -b  &> top.log &
 ip a 
 
@@ -35,3 +37,4 @@ ip a
 cat ./server.log
 cat ./client.log
 cat ./top.log
+cat nmon.log
