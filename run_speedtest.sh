@@ -39,7 +39,7 @@ echo "before"
 sed -n "/ip/p" main.go
 case_hy_protocol $protocol
 echo "after"
-sed -n "/ip/p" main.go
+cat -n  main.go |grep -E "22|35"
 #./sed_the_ip.sh end
 go build -v ./...
 wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 -o down_hy.log && chmod +x hysteria-linux-amd64
