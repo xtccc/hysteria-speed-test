@@ -34,6 +34,6 @@ ip a
 ./speedtest-backend &
 #./run_hy_speedtest.sh end
 ./go_click |tee  go_click.log 
-cat ./server.log || echo "not server.log"
-cat ./client.log || echo "not client.log"
-cat ./top.log || echo "not top.log"
+#cat ./server.log || echo "not server.log"
+#cat ./client.log || echo "not client.log"
+#cat ./top.log || echo "not top.log"
