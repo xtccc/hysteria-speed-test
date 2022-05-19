@@ -23,6 +23,7 @@ jobs:
       - name: run speedtest env
         env: 
           protocol: n
+          has_build: false
         run: ./run_speedtest_env.sh
 
       - name: run speedtest in no proxy

@@ -54,27 +54,33 @@ sed -i "s/ip/$ip/" client.json
 echo "after"
 cat -n client.json | grep -E "\b2\b"
 
-echo "before"
-cat -n main.go | grep -E "22|35"
-sed -i "s/ip/$ip/" main.go
-echo "after"
-cat -n main.go | grep -E "22|35"
-#./sed_the_ip.sh end
-go build -v ./... &>${protocol}_build.log
+if [ x$has_build = xfalse ]; then
 
+    echo "before"
+    cat -n main.go | grep -E "22|35"
+    sed -i "s/ip/$ip/" main.go
+    echo "after"
+    cat -n main.go | grep -E "22|35"
+    #./sed_the_ip.sh end
+    go build -v ./... &>${protocol}_build.log
+
+fi
 home_dir=$(pwd)
 #wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria -o down_hy.log && chmod +x hysteria
 #curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o ${protocol}_down_hy_source.log -O - | tar -xz
-git clone https://github.com/HyNetwork/hysteria.git
-mv hysteria hysteria_source 
-dir=hysteria_source
-cd $dir/cmd
-echo $(pwd)
-git branch -vv | tee
-go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
-mv ./hysteria $home_dir
+if [ x$has_build = xfalse ]; then
+    git clone https://github.com/HyNetwork/hysteria.git
+    mv hysteria hysteria_source
+    dir=hysteria_source
+    cd $dir/cmd
+    echo $(pwd)
+    git branch -vv | tee
+    go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
+    mv ./hysteria $home_dir
 
-cd $home_dir
+    cd $home_dir
+
+fi
 ./hysteria --version
 
 #./gen_key.sh
