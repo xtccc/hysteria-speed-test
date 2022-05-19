@@ -23,7 +23,7 @@ jobs:
       - name: run speedtest env
         env: 
           protocol: n
-        run: bash -x ./run_speedtest.sh
+        run: ./run_speedtest.sh
 
       - name: run speedtest
         run: ./go_click |tee  go_click.log 
