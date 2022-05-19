@@ -44,8 +44,10 @@ go build -v ./... &>build.log
 #wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 -o down_hy.log && chmod +x hysteria-linux-amd64
 curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o down_hy_source.log -O - | tar -xz
 dir=$(ls |grep hy )
+echo $dir
 cd $dir/cmd
 go build -o hysteria-linux-amd64 &> build_hu.log && chmod +x hysteria-linux-amd64
+hysteria-linux-amd64 --version
 
 cd ../../
 
