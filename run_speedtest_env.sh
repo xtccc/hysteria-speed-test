@@ -1,3 +1,4 @@
+set -xe
 function case_hy_protocol() {
     # w , f ,u to set the protocol: "" in server.json
     case "${1}" in
@@ -47,7 +48,7 @@ dir=$(ls |grep HyNetwork-hysteria )
 echo $dir
 cd $dir/cmd
 go build -o hysteria-linux-amd64 &> build_hu.log && chmod +x hysteria-linux-amd64
-hysteria-linux-amd64 --version
+./hysteria-linux-amd64 --version
 
 cd ../../
 
