@@ -33,7 +33,7 @@ ip a
 ./hysteria-linux-amd64 client -c ./client.json &> client.log &
 ./speedtest-backend &
 #./run_hy_speedtest.sh end
-./go_click
+./go_click |tee  go_click.log &
 cat ./server.log
 cat ./client.log
 cat ./top.log
