@@ -49,13 +49,6 @@ jobs:
       - name: run speedtest in wechat with obfs
         run: ./run_speedtest.sh
 
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.0.0
-        with:
-          name: log
-          path: ./*log
-
-
       - name: run speedtest env
         env: 
           protocol: u
