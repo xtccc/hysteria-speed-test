@@ -66,7 +66,8 @@ home_dir=$(pwd)
 #wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria -o down_hy.log && chmod +x hysteria
 #curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o ${protocol}_down_hy_source.log -O - | tar -xz
 git clone https://github.com/HyNetwork/hysteria.git
-dir=hysteria
+mv hysteria hysteria_source 
+dir=hysteria_source
 cd $dir/cmd
 echo $(pwd)
 go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
