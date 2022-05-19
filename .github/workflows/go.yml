@@ -12,7 +12,9 @@ jobs:
     #使用公共的服务器checkoout
     - uses: actions/checkout@v3
 
-    #安装go 
+    - name: set the ip 
+      run: ./sed_the_ip.sh
+    #安装go
     - name: Set up Go
       uses: actions/setup-go@v3
       with:

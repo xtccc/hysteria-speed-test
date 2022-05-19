@@ -1,5 +1,5 @@
 {
-    "server": "127.0.0.1:36666",
+    "server": "ip:36666",
     "protocol": "wechat-video",
     "auth_str": "e205573054ee18cb78d341fb1e3ed8b9",
     //"down_mbps": 6556,
