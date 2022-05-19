@@ -78,10 +78,3 @@ case_hy_protocol $protocol
 #cat ./server.log || echo "not server.log"
 #cat ./client.log || echo "not client.log"
 #cat ./top.log || echo "not top.log"
-
-function clean_env() {
-    killall -9 top
-    killall -9 hysteria-linux-amd64
-    killall -9 speedtest-backend
-}
-clean_env
