@@ -21,6 +21,8 @@ jobs:
         uses: browser-actions/setup-chrome@v0.0.0
 
       - name: run speedtest env
+        env: 
+          protocol: n
         run: bash -x ./run_speedtest.sh
 
       - name: run speedtest

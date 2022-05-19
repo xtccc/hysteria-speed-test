@@ -1,16 +1,46 @@
+function case_hy_protocol() {
+    # w , f ,u to set the protocol: "" in server.json
+    case "${1}" in
+    w)
+        echo "\$1 is $1, use wechat-video"
+        sed -i 's/protocol": ".*/protocol": "wechat-video"/' server.json
+        sed -i "s/ip/$ip/" main.go
+        ;;
+    f)
+        echo "\$1 is $1, use faketcp"
+        sed -i 's/protocol": ".*/protocol": "faketcp"/' server.json
+        sed -i "s/ip/$ip/" main.go
+        ;;
+    u)
+
+        echo "\$1 is $1, use udp"
+        sed -i 's/protocol": ".*/protocol": "faketcp"/' server.json
+        sed -i "s/ip/$ip/" main.go
+        ;;
+    n)
+        echo "\$1 is $1, use no proxy"
+        sed -i "s/ip/127.0.0.1/" main.go
+        ;;
+    esac
+
+}
+
 #./sed_the_ip.sh
-ip=$(ip a |grep inet |grep -Eo '(10|192)\.[0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}' |grep -v 255)
+ip=$(ip a | grep inet | grep -Eo '(10|192)\.[0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}' | grep -v 255)
 echo "ip is:" $ip
 
+echo "before"
 sed -n "/ip/p" client.json
-sed -n "/ip/p" main.go
-
 sed -i "s/ip/$ip/" client.json
-sed -i "s/ip/$ip/" main.go
-
+echo "after"
 sed -n "/$ip/p" client.json
+
+echo "before"
+sed -n "/ip/p" main.go
+case_hy_protocol $protocol
+echo "after"
 sed -n "/$ip/p" main.go
-#./sed_the_ip.sh end 
+#./sed_the_ip.sh end
 go build -v ./...
 wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 && chmod +x hysteria-linux-amd64
 
@@ -24,13 +54,13 @@ openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out serv
 
 wget https://github.com/librespeed/speedtest-go/releases/download/v1.1.4/speedtest-go_1.1.4_linux_amd64.tar.gz && tar xf speedtest-go_1.1.4_linux_amd64.tar.gz && rm speedtest-go_1.1.4_linux_amd64.tar.gz
 #./run_hy_speedtest.sh
-lscpu 
+lscpu
 
-top -c  -b  &> top.log &
-ip a 
+top -c -b &>top.log &
+ip a
 
-./hysteria-linux-amd64 server -c ./server.json &> server.log &
-./hysteria-linux-amd64 client -c ./client.json &> client.log &
+./hysteria-linux-amd64 server -c ./server.json &>server.log &
+./hysteria-linux-amd64 client -c ./client.json &>client.log &
 ./speedtest-backend &
 #./run_hy_speedtest.sh end
 #cat ./server.log || echo "not server.log"
