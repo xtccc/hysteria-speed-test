@@ -5,8 +5,8 @@ function case_hy_protocol() {
     w)
         echo "\$1 is $1, use wechat-video"
         sed -i 's/protocol": ".*/protocol": "wechat-video"/' server.json
-        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
-        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
+        ./hysteria server -c ./server.json &>${protocol}_server.log &
+        ./hysteria client -c ./client.json &>${protocol}_client.log &
         ;;
 
     w-o)
@@ -18,8 +18,8 @@ function case_hy_protocol() {
         sed -i '2 a\"obfs":"7ba34ae04b27677419db1ac547f01ab1",' server.json
         sed -i '2 a\"obfs":"7ba34ae04b27677419db1ac547f01ab1",' client.json
         cat server.json client.json
-        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
-        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
+        ./hysteria server -c ./server.json &>${protocol}_server.log &
+        ./hysteria client -c ./client.json &>${protocol}_client.log &
 
         # rm obfs
         sed -i '/obfs/ d' server.json
@@ -30,14 +30,14 @@ function case_hy_protocol() {
 
         echo "\$1 is $1, use udp"
         sed -i 's/protocol": ".*/protocol": "udp"/' server.json
-        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
-        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
+        ./hysteria server -c ./server.json &>${protocol}_server.log &
+        ./hysteria client -c ./client.json &>${protocol}_client.log &
         ;;
     n)
 
         echo "\$1 is $1, use no proxy "
-        ./hysteria-linux-amd64 server -c ./server.json &>${protocol}_server.log &
-        ./hysteria-linux-amd64 client -c ./client.json &>${protocol}_client.log &
+        ./hysteria server -c ./server.json &>${protocol}_server.log &
+        ./hysteria client -c ./client.json &>${protocol}_client.log &
         ;;
     esac
     sed -n '/protocol": ".*/p' server.json
@@ -62,18 +62,18 @@ cat -n main.go | grep -E "22|35"
 #./sed_the_ip.sh end
 go build -v ./... &>${protocol}_build.log
 
-#wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria-linux-amd64 -o down_hy.log && chmod +x hysteria-linux-amd64
-curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o ${protocol}_down_hy_source.log -O - | tar -xz
-dir=$(ls | grep HyNetwork-hysteria)
-echo $dir
 home_dir=$(pwd)
+#wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria -o down_hy.log && chmod +x hysteria
+#curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o ${protocol}_down_hy_source.log -O - | tar -xz
+git clone https://github.com/HyNetwork/hysteria.git
+dir=hysteria
 cd $dir/cmd
 echo $(pwd)
-go build -o hysteria-linux-amd64 &>${home_dir}/build_hu.log && chmod +x hysteria-linux-amd64
-mv ./hysteria-linux-amd64 $home_dir
+go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
+mv ./hysteria $home_dir
 
 cd $home_dir
-./hysteria-linux-amd64 --version
+./hysteria --version
 
 #./gen_key.sh
 openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
