@@ -15,7 +15,7 @@ function case_hy_protocol() {
     u)
 
         echo "\$1 is $1, use udp"
-        sed -i 's/protocol": ".*/protocol": "faketcp"/' server.json
+        sed -i 's/protocol": ".*/protocol": "udp"/' server.json
 
         ;;
     esac
