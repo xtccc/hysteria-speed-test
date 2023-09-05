@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 set -e
 function case_hy_protocol() {
     # w , f ,u to set the protocol: "" in server.json
@@ -66,8 +67,6 @@ if [ x$has_build = xfalse ]; then
 
 fi
 home_dir=$(pwd)
-#wget https://github.com/HyNetwork/hysteria/releases/download/v1.0.4/hysteria -o down_hy.log && chmod +x hysteria
-#curl -s https://api.github.com/repos/HyNetwork/hysteria/tags | grep "tarball_url" | grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -o ${protocol}_down_hy_source.log -O - | tar -xz
 if [ x$has_build = xfalse ]; then
     git clone https://github.com/HyNetwork/hysteria.git
     mv hysteria hysteria_source
@@ -77,7 +76,6 @@ if [ x$has_build = xfalse ]; then
     git branch -vv | tee
     go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
     mv ./hysteria $home_dir
-
     cd $home_dir
 
 fi

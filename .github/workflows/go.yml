@@ -17,58 +17,122 @@ jobs:
         with:
           go-version: 1.18
 
-      - name: install chome
+      - name: install chrome
         uses: browser-actions/setup-chrome@v0.0.0
 
       - name: run speedtest env
-        env: 
+        env:
           protocol: n
           has_build: false
-        run: ./run_speedtest_env.sh
+        run: ./hysteria/run_speedtest_env.sh
 
       - name: run speedtest in no proxy
-        env: 
+        env:
           protocol: n
-        run: ./run_speedtest.sh
-
+        run: ./hysteria/run_speedtest.sh
 
       - name: run speedtest env
-        env: 
+        env:
           protocol: w
-        run: ./run_speedtest_env.sh
+        run: ./hysteria/run_speedtest_env.sh
 
       - name: run speedtest in wechat-video
-        run: ./run_speedtest.sh
-
+        run: ./hysteria/run_speedtest.sh
 
       - name: run speedtest env
-        env: 
+        env:
           protocol: w-o
-        run: ./run_speedtest_env.sh
+        run: ./hysteria/run_speedtest_env.sh
 
       - name: run speedtest in wechat with obfs
-        run: ./run_speedtest.sh
+        run: ./hysteria/run_speedtest.sh
 
       - name: run speedtest env
-        env: 
+        env:
           protocol: u
-        run: ./run_speedtest_env.sh
+        run: ./hysteria/run_speedtest_env.sh
 
       - name: run speedtest in udp
-        run: ./run_speedtest.sh    
+        run: ./hysteria/run_speedtest.sh
 
       - name: run speedtest env
-        env: 
+        env:
           protocol: n
-        run: ./run_speedtest_env.sh
+        run: ./hysteria/run_speedtest_env.sh
 
       - name: run speedtest in no proxy
-        env: 
-          protocol: n      
-        run: ./run_speedtest.sh
+        env:
+          protocol: n
+        run: ./hysteria/run_speedtest.sh
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.0.0
         with:
           name: log
-          path: ./*log
+          path: ./hysteria/*log
+
+  hysteria2_speed_test:
+    runs-on: ubuntu-latest
+    steps:
+      #使用公共的服务器checkoout
+      - uses: actions/checkout@v3
+
+      #安装go
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: install chome
+        uses: browser-actions/setup-chrome@v0.0.0
+
+      - name: run speedtest env
+        env:
+          protocol: n
+          has_build: false
+        run: ./hysteria2/run_speedtest_env.sh
+
+      - name: run speedtest in no proxy
+        env:
+          protocol: n
+        run: ./hysteria2/run_speedtest.sh
+
+      - name: run speedtest env
+        env:
+          protocol: w
+        run: ./hysteria2/run_speedtest_env.sh
+
+      - name: run speedtest in wechat-video
+        run: ./hysteria2/run_speedtest.sh
+
+      - name: run speedtest env
+        env:
+          protocol: w-o
+        run: ./hysteria2/run_speedtest_env.sh
+
+      - name: run speedtest in wechat with obfs
+        run: ./hysteria2/run_speedtest.sh
+
+      - name: run speedtest env
+        env:
+          protocol: u
+        run: ./hysteria2/run_speedtest_env.sh
+
+      - name: run speedtest in udp
+        run: ./hysteria2/run_speedtest.sh
+
+      - name: run speedtest env
+        env:
+          protocol: n
+        run: ./hysteria2/run_speedtest_env.sh
+
+      - name: run speedtest in no proxy
+        env:
+          protocol: n
+        run: ./hysteria2/run_speedtest.sh
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: log
+          path: ./hysteria2/*log

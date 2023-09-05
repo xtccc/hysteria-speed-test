@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -11,7 +10,7 @@ import (
 )
 
 func main() {
-	dir, err := ioutil.TempDir("", "chromedp-example")
+	dir, err := os.MkdirTemp("", "chromedp-example")
 	if err != nil {
 		log.Fatal(err)
 	}

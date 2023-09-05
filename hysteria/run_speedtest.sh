@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 set -e
 if [ x$protocol = xn ]; then
     echo "use no proxy"
