@@ -45,58 +45,67 @@ function case_hy_protocol() {
 
 }
 
-#./sed_the_ip.sh
-ip=$(ip a | grep inet | grep -Eo '(10|192)\.[0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}' | grep -v 255)
-echo "ip is:" $ip
-
-echo "before"
-cat -n client.json | grep -E "\b2\b"
-sed -i "s/ip/$ip/" client.json
-echo "after"
-cat -n client.json | grep -E "\b2\b"
-
-if [ x$has_build = xfalse ]; then
+function sed_ip_in_config() {
+    ip=$(ip a | grep inet | grep -Eo '(10|192)\.[0-9]{0,3}\.[0-9]{0,3}\.[0-9]{0,3}' | grep -v 255)
+    echo "ip is:" $ip
 
     echo "before"
-    cat -n main.go | grep -E "22|35"
-    sed -i "s/ip/$ip/" main.go
+    cat -n client.json | grep -E "\b2\b"
+    sed -i "s/ip/$ip/" client.json
     echo "after"
-    cat -n main.go | grep -E "22|35"
-    #./sed_the_ip.sh end
-    go build -v ./... &>${protocol}_build.log
+    cat -n client.json | grep -E "\b2\b"
+}
 
-fi
-home_dir=$(pwd)
-if [ x$has_build = xfalse ]; then
-    git clone https://github.com/HyNetwork/hysteria.git
-    mv hysteria hysteria_source
-    dir=hysteria_source
-    cd $dir/cmd
-    echo $(pwd)
-    git branch -vv | tee
-    go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
-    mv ./hysteria $home_dir
-    cd $home_dir
+function build() {
+    if [ x$has_build = xfalse ]; then
 
-fi
-./hysteria --version
+        echo "before"
+        cat -n main.go | grep -E "22|35"
+        sed -i "s/ip/$ip/" main.go
+        echo "after"
+        cat -n main.go | grep -E "22|35"
+        #./sed_the_ip.sh end
+        go build -v ./... &>${protocol}_build.log
 
-#./gen_key.sh
-openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
-openssl rsa -passin pass:gsahdg -in server.pass.key -out server.key
-rm server.pass.key
-openssl req -new -key server.key -out server.csr -subj "/CN=ip"
-openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
-#./gen_key.sh end
+    fi
+    home_dir=$(pwd)
+    if [ x$has_build = xfalse ]; then
+        git clone https://github.com/HyNetwork/hysteria.git
+        mv hysteria hysteria_source
+        dir=hysteria_source
+        cd $dir/cmd
+        echo $(pwd)
+        git branch -vv | tee
+        go build -o hysteria &>${home_dir}/build_hu.log && chmod +x hysteria
+        mv ./hysteria $home_dir
+        cd $home_dir
 
-wget https://github.com/librespeed/speedtest-go/releases/download/v1.1.4/speedtest-go_1.1.4_linux_amd64.tar.gz -o down_speedtest_go.log && tar xf speedtest-go_1.1.4_linux_amd64.tar.gz && rm speedtest-go_1.1.4_linux_amd64.tar.gz
-#./run_hy_speedtest.sh
+    fi
+    ./hysteria --version
 
-top -c -b &>${protocol}_top.log &
+}
 
-case_hy_protocol $protocol
-./speedtest-backend &
-#./run_hy_speedtest.sh end
-#cat ./server.log || echo "not server.log"
-#cat ./client.log || echo "not client.log"
-#cat ./top.log || echo "not top.log"
+function gen_key() {
+    openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
+    openssl rsa -passin pass:gsahdg -in server.pass.key -out server.key
+    rm server.pass.key
+    openssl req -new -key server.key -out server.csr -subj "/CN=ip"
+    openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.crt
+}
+function main() {
+    cd hysteria
+
+    sed_ip_in_config
+
+    build
+
+    gen_key
+
+    wget https://github.com/librespeed/speedtest-go/releases/download/v1.1.4/speedtest-go_1.1.4_linux_amd64.tar.gz -o down_speedtest_go.log && tar xf speedtest-go_1.1.4_linux_amd64.tar.gz && rm speedtest-go_1.1.4_linux_amd64.tar.gz
+    
+    top -c -b &>${protocol}_top.log &
+
+    case_hy_protocol $protocol
+    ./speedtest-backend &
+}
+main
